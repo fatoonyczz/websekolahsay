@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SMKN 2 TUNJUNG - Sekolah Kejuruan Terbaik</title>
+<style>
+  /* Reset & base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #4A90E2, #9013FE);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  a {
+    color: #ffd700;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover {
+    color: #fff;
+  }
+
+  /* Header */
+  header {
+    background: rgba(0, 0, 0, 0.6);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-weight: 900;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: #ffd700;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+  .nav-links a {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  .nav-toggle span {
+    background: #ffd700;
+    height: 3px;
+    width: 25px;
+    margin-bottom: 5px;
+    border-radius: 2px;
+  }
+
+  /* Hero */
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    animation: fadeInDown 1.2s ease forwards;
+    opacity: 0;
+  }
+  .hero p {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    animation: fadeInUp 1.5s ease forwards;
+    opacity: 0;
+    color: #f0e68c;
+  }
+  .btn-primary {
+    background: #ffd700;
+    color: #222;
+    font-weight: 700;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.6);
+    transition: background 0.4s ease;
+  }
+  .btn-primary:hover {
+    background: #ffea00;
+  }
+
+  /* Sections */
+  section {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 1100px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  }
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    letter-spacing: 1.5px;
+    color: #ffd700;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: #ffd700;
+    border-radius: 2px;
+  }
+  p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  /* Profile */
+  .profile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .profile img {
+    max-width: 350px;
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+  }
+  .profile img:hover {
+    transform: scale(1.05) rotate(2deg);
+  }
+  .profile-text {
+    max-width: 600px;
+  }
+
+  /* News / Berita */
+  .news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .news-item {
+    background: rgba(255,255,255,0.15);
+    margin-bottom: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: background 0.3s ease;
+    cursor: pointer;
+  }
+  .news-item:hover {
+    background: rgba(255,255,255,0.3);
+  }
+  .news-item h3 {
+    margin: 0 0 0.5rem 0;
+    color: #ffd700;
+  }
+  .news-item p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #eee;
+  }
+
+  /* Pagination */
+  .pagination {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+  .pagination button {
+    background: #ffd700;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .pagination button:disabled {
+    background: #bbb;
+    cursor: default;
+  }
+  .pagination button:hover:not(:disabled) {
+    background: #ffea00;
+  }
+
+  /* Gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 1rem;
+  }
+  .gallery img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .gallery img:hover {
+    transform: scale(1.07) rotate(1deg);
+  }
+
+  /* Contact */
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  input, textarea {
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+  }
+  input:focus, textarea:focus {
+    outline: 3px solid #ffd700;
+    background: #fff9d6;
+    color: #222;
+  }
+  button[type="submit"] {
+    background: #ffd700;
+    border: none;
+    font-weight: 700;
+    padding: 0.85rem 2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #222;
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.6);
+    transition: background 0.4s ease;
+  }
+  button[type="submit"]:hover {
+    background: #ffea00;
+  }
+
+  /* Footer */
+  footer {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #ddd;
+  }
+  .social-links {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  .social-links a {
+    font-size: 1.5rem;
+    color: #ffd700;
+    transition: color 0.3s ease;
+  }
+  .social-links a:hover {
+    color: #ffea00;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav {
+      padding: 1rem;
+    }
+    .nav-links {
+      position: fixed;
+      top: 60px;
+      right: 0;
+      background: rgba(0,0,0,0.9);
+      height: calc(100vh - 60px);
+      width: 70vw;
+      flex-direction: column;
+      padding: 2rem;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      border-radius: 10px 0 0 10px;
+      box-shadow: -4px 0 15px rgba(0,0,0,0.7);
+    }
+    .nav-links.open {
+      transform: translateX(0);
+    }
+    .nav-toggle {
+      display: flex;
+    }
+  }
+
+  /* Animations */
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo" aria-label="Logo SMKN 2 TUNJUNG">SMKN 2 TUNJUNG</div>
+    <div class="nav-toggle" aria-label="Toggle Navigation" aria-expanded="false" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav-links" id="nav-links">
+      <a href="#profil">Profil</a>
+      <a href="#berita">Berita</a>
+      <a href="#galeri">Galeri</a>
+      <a href="#kontak">Kontak</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" aria-label="Hero Section">
+    <h1>Selamat Datang di SMKN 2 TUNJUNG</h1>
+    <p>Menghasilkan lulusan berkualitas dan siap kerja dengan keahlian terbaik.</p>
+    <button class="btn-primary" onclick="document.getElementById('kontak').scrollIntoView({behavior: 'smooth'})">Hubungi Kami</button>
+  </section>
+
+  <section id="profil" aria-label="Profil Sekolah">
+    <h2>Profil Sekolah</h2>
+    <div class="profile">
+      <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=400&q=80" alt="Gedung SMKN 2 TUNJUNG" />
+      <div class="profile-text">
+        <p>SMKN 2 TUNJUNG adalah sekolah menengah kejuruan yang berkomitmen untuk mencetak tenaga ahli profesional di berbagai bidang industri. Kami menawarkan jurusan Teknologi Informasi, Teknik Mesin, dan Bisnis Manajemen dengan fasilitas lengkap dan tenaga pengajar berpengalaman.</p>
+        <p>Visi kami adalah menjadi sekolah kejuruan unggulan yang menghasilkan lulusan siap kerja dan inovatif.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="berita" aria-label="Berita Sekolah">
+    <h2>Berita Terbaru</h2>
+    <ul class="news-list" id="news-list">
+      <!-- Berita akan dimuat lewat JavaScript -->
+    </ul>
+    <div class="pagination" aria-label="Pagination Berita" id="pagination">
+      <!-- Pagination buttons akan dibuat di JS -->
+    </div>
+  </section>
+
+  <section id="galeri" aria-label="Galeri Foto">
+    <h2>Galeri Foto</h2>
+    <div class="gallery" aria-live="polite" aria-relevant="additions removals">
+      <img src="https://images.unsplash.com/photo-1556742031-c6961e8560b0?auto=format&fit=crop&w=600&q=80" alt="Suasana kelas" />
+      <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=600&q=80" alt="Praktikum siswa" />
+      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="Kegiatan ekstrakurikuler" />
+      <img src="https://images.unsplash.com/photo-1531058020387-c952146fbf65?auto=format&fit=crop&w=600&q=80" alt="Laboratorium komputer" />
+      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="Kegiatan olahraga" />
+      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Guru dan murid" />
+    </div>
+  </section>
+
+  <section id="kontak" aria-label="Kontak Sekolah">
+    <h2>Hubungi Kami</h2>
+    <form id="contact-form" aria-live="polite" aria-label="Form Kontak Sekolah">
+      <input type="text" id="name" name="name" placeholder="Nama Lengkap" required aria-required="true" />
+      <input type="email" id="email" name="email" placeholder="Email" required aria-required="true" />
+      <textarea id="message" name="message" rows="5" placeholder="Pesan Anda" required aria-required="true"></textarea>
+      <button type="submit">Kirim Pesan</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <div>© 2025 SMKN 2 TUNJUNG. Semua hak cipta dilindungi.</div>
+  <div class="social-links" aria-label="Link Media Sosial">
+    <a href="https://facebook.com/SMKN2TUNJUNG" target="_blank" rel="noopener" aria-label="Facebook SMKN 2 TUNJUNG" title="Facebook">
+      &#x1F426;
+    </a>
+    <a href="https://instagram.com/SMKN2TUNJUNG" target="_blank" rel="noopener" aria-label="Instagram SMKN 2 TUNJUNG" title="Instagram">
+      &#x1F4F7;
+    </a>
+    <a href="https://twitter.com/SMKN2TUNJUNG" target="_blank" rel="noopener" aria-label="Twitter SMKN 2 TUNJUNG" title="Twitter">
+      &#x1F426;
+    </a>
+    <a href="https://youtube.com/SMKN2TUNJUNG" target="_blank" rel="noopener" aria-label="YouTube SMKN 2 TUNJUNG" title="YouTube">
+      &#x25B6;
+    </a>
+  </div>
+</footer>
+
+<script>
+  // Toggle Mobile Nav
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+  navToggle.addEventListener('click', () => {
+    const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+    navToggle.setAttribute('aria-expanded', !expanded);
+    navLinks.classList.toggle('open');
+  });
+  navToggle.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navToggle.click();
+    }
+  });
+
+  // Data berita (bisa di-load dari API/backend nanti)
+  const newsData = [
+    { title: "Penerimaan Siswa Baru Tahun 2025 Dibuka", date: "2025-07-01", content: "Pendaftaran siswa baru SMKN 2 TUNJUNG dibuka mulai tanggal 1 Juli 2025. Segera daftarkan diri Anda untuk masa depan cerah." },
+    { title: "Workshop Teknologi Informasi", date: "2025-06-20", content: "Workshop tentang pengembangan web modern akan diadakan pada 25 Juni 2025. Terbuka untuk seluruh siswa." },
+    { title: "Kelulusan Angkatan 2024", date: "2025-05-30", content: "Selamat kepada seluruh siswa angkatan 2024 yang telah resmi lulus dan siap memasuki dunia kerja." },
+    { title: "Ekstrakurikuler Baru: Robotik", date: "2025-05-15", content: "Mulai semester depan, SMKN 2 TUNJUNG membuka ekstrakurikuler robotik untuk mengembangkan kreativitas siswa." },
+    { title: "Renovasi Laboratorium Mesin", date: "2025-04-10", content: "Laboratorium Teknik Mesin telah direnovasi dengan peralatan terbaru demi mendukung proses belajar." },
+    { title: "Hari Guru Nasional", date: "2025-04-05", content: "Kami mengucapkan terima kasih kepada seluruh guru atas dedikasi dan pengabdian mereka." },
+    { title: "Lomba Desain Grafis Antar Sekolah", date: "2025-03-25", content: "Siswa SMKN 2 TUNJUNG berhasil meraih juara 1 dalam lomba desain grafis tingkat provinsi." },
+    { title: "Pelatihan Bahasa Inggris", date: "2025-03-10", content: "Pelatihan intensif bahasa Inggris untuk meningkatkan kemampuan komunikasi siswa." },
+  ];
+
+  const newsList = document.getElementById('news-list');
+  const pagination = document.getElementById('pagination');
+  const itemsPerPage = 3;
+  let currentPage = 1;
+  const totalPages = Math.ceil(newsData.length / itemsPerPage);
+
+  function renderNewsPage(page) {
+    newsList.innerHTML = '';
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const pageItems = newsData.slice(start, end);
+
+    pageItems.forEach(item => {
+      const li = document.createElement('li');
+      li.classList.add('news-item');
+      li.tabIndex = 0;
+      li.setAttribute('role', 'article');
+      li.innerHTML = `
+        <h3>${item.title}</h3>
+        <small>${new Date(item.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</small>
+        <p>${item.content}</p>
+      `;
+      newsList.appendChild(li);
+    });
+  }
+
+  function renderPagination() {
+    pagination.innerHTML = '';
+
+    const prevBtn = document.createElement('button');
+    prevBtn.textContent = 'Prev';
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderNewsPage(currentPage);
+        renderPagination();
+        window.scrollTo({ top: document.getElementById('berita').offsetTop - 70, behavior: 'smooth' });
+      }
+    });
+    pagination.appendChild(prevBtn);
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.disabled = i === currentPage;
+      btn.addEventListener('click', () => {
+        currentPage = i;
+        renderNewsPage(currentPage);
+        renderPagination();
+        window.scrollTo({ top: document.getElementById('berita').offsetTop - 70, behavior: 'smooth' });
+      });
+      pagination.appendChild(btn);
+    }
+
+    const nextBtn = document.createElement('button');
+    nextBtn.textContent = 'Next';
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.addEventListener('click', () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderNewsPage(currentPage);
+        renderPagination();
+        window.scrollTo({ top: document.getElementById('berita').offsetTop - 70, behavior: 'smooth' });
+      }
+    });
+    pagination.appendChild(nextBtn);
+  }
+
+  renderNewsPage(currentPage);
+  renderPagination();
+
+  // Contact form submission (dummy)
+  document.getElementById('contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Terima kasih telah menghubungi kami, pesan Anda sudah terkirim.');
+    e.target.reset();
+  });
+</script>
+
+</body>
+</html>
